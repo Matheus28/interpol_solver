@@ -272,7 +272,7 @@ bool IsBlocked(size_t station) {
 }
 
 int main() {
-
+	puts("Verifying board...");
 	for(size_t a = 1; a < NUM_STATIONS; ++a) {
 		if(stations[a].id != a) printf("Station id %d is incorrect\n", int(a));
 		for(size_t b : stations[a].taxi) {
@@ -280,6 +280,8 @@ int main() {
 				printf("Station %d referred from %d doesn't exist\n", int(b), int(a));
 				continue;
 			}
+
+			if(a == b) printf("Station %d has a taxi to itself\n", int(a));
 
 			auto it = std::find(stations[b].taxi.begin(), stations[b].taxi.end(), a);
 			if(it == stations[b].taxi.end()) {
@@ -293,6 +295,8 @@ int main() {
 				continue;
 			}
 
+			if(a == b) printf("Station %d has a bus to itself\n", int(a));
+
 			auto it = std::find(stations[b].bus.begin(), stations[b].bus.end(), a);
 			if(it == stations[b].bus.end()) {
 				printf("%d can take a bus to %d, but the reverse is not possible, might be an error.\n", int(a), int(b));
@@ -304,6 +308,8 @@ int main() {
 				printf("Station %d referred from %d doesn't exist\n", int(b), int(a));
 				continue;
 			}
+
+			if(a == b) printf("Station %d has a metro to itself\n", int(a));
 
 			auto it = std::find(stations[b].metro.begin(), stations[b].metro.end(), a);
 			if(it == stations[b].metro.end()) {
@@ -317,6 +323,8 @@ int main() {
 				continue;
 			}
 
+			if(a == b) printf("Station %d has a boat to itself\n", int(a));
+
 			auto it = std::find(stations[b].boat.begin(), stations[b].boat.end(), a);
 			if(it == stations[b].boat.end()) {
 				printf("%d can take a boat to %d, but the reverse is not possible, might be an error.\n", int(a), int(b));
@@ -328,6 +336,8 @@ int main() {
 		std::sort(stations[a].metro.begin(), stations[a].metro.end());
 		std::sort(stations[a].boat.begin(), stations[a].boat.end());
 	}
+	
+	puts("Done.\n");
 
 	for(;;) {
 		char cmd;
